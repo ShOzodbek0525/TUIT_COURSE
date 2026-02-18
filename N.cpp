@@ -1,7 +1,7 @@
 #include <iostream>
 #include <math.h>
 using namespace std;
-
+https://lms.tuit.uz/uploads/activities/KK/f9/sl/1770811275.docx
 
 class humans
 {
