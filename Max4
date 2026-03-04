@@ -1,0 +1,46 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+typedef __int128_t int128;
+
+// 0 dan n-1 gacha sonlar ichida k-bit 1 bo'lganlar sonini topish
+long long count_ones(long long n, int k) {
+    if (n <= 0) return 0;
+    long long period = 1LL << (k + 1);
+    long long full_blocks = n / period;
+    long long ones = full_blocks * (1LL << k);
+    long long remaining = n % period;
+    ones += max(0LL, remaining - (1LL << k));
+    return ones;
+}
+
+int main() {
+    long long n, m;
+    if (!(cin >> n >> m)) return 0;
+
+    int128 total_sum = 0;
+
+    for (int k = 0; k < 62; k++) {
+        long long ones_i = count_ones(n, k);
+        long long zeros_i = n - ones_i;
+        long long ones_j = count_ones(m, k);
+        long long zeros_j = m - ones_j;
+
+        int128 count_k_is_one = (int128)zeros_i * ones_j + (int128)ones_i * zeros_j;
+        total_sum += ((int128)1 << k) * count_k_is_one;
+    }
+
+    // __int128 ni chiqarish uchun stringga o'giramiz
+    string s = "";
+    if (total_sum == 0) s = "0";
+    while (total_sum > 0) {
+        s += (char)((total_sum % 10) + '0');
+        total_sum /= 10;
+    }
+    reverse(s.begin(), s.end());
+    cout << s << endl;
+
+    return 0;
+}
