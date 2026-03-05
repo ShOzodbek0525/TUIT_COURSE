@@ -1,0 +1,9 @@
+Men sizga bir ketma-ketlikni tushuntiraman va keyin uni davom ettirishni so‘rayman. Ketma-ketlikni hosil qilish qoidasi:
+
+1. Boshlang‘ich blok: 1 dan 10 gacha bo‘lgan sonlar.
+2. Har bir keyingi blok oldingi blokdagi sonlarning har birini “raqamlar soni” bilan ko‘paytirish orqali hosil qilinadi.
+   - Masalan, 1440 (4 xonali) → 4 bilan ko‘paytirilib yangi blok hosil qilinadi: 1440*4, 1728*4, ...
+3. Ketma-ketlik bloklar orqali o‘sadi va har bir blok oldingi blok sonlarining raqamlar soni bilan ko‘paytmasi sifatida hosil qilinadi.
+4. Har bir son faqat `n` dan kichik yoki teng bo‘lsa ketma-ketlikda bo‘ladi.
+
+Iltimos, ketma-ketlikni shu qoidalarga asosan davom ettiring va **n gacha bo‘lgan sonlar sonini ham hisoblab bering**.
