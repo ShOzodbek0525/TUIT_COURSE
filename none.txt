@@ -1,0 +1,64 @@
+using namespace IO;
+#pragma endregion
+  private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+  }
+  private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
+    Application::Exit();
+  }
+  private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+    dataGridView1->Columns->Add("Summa", "Summa");
+    int Summa = 0;
+    int N, M, summa;
+    N = dataGridView1->Rows->Count;  //qatorlar soni
+    M = dataGridView1->Columns->Count;  //ustunlar soni
+    for (int i = 0; i < N - 1; i++)
+    {
+      summa = 0;
+      for (int j = 2; j < M - 1; j++) {
+        summa += Convert::ToInt32(dataGridView1->Rows[i]->Cells[j]->Value);
+
+      }
+      dataGridView1->Rows[i]->Cells[M - 1]->Value = summa;
+      Summa += summa;
+    }
+    dataGridView1->Columns[M - 1]->Width = 50;
+    textBox1->Text = Summa.ToString();
+  }
+  private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+    chart1->Visible = false;
+    String^ faylnomi = "jadval.txt";
+    array<String^>^ Qatorlar = File::ReadAllLines(faylnomi);
+    if (Qatorlar->Length == 0) { MessageBox::Show("Fayl bo'sh!"); return; }
+    array<String^>^ Sarlavha = Qatorlar[0]->Split(',');
+    for each (String ^ ustun in Sarlavha) {
+      //ustun = ustun->Trim();
+      dataGridView1->Columns->Add(ustun, ustun);
+    }
+    dataGridView1->Columns[0]->Width = 25;
+    dataGridView1->Columns[1]->Width = 75;
+    
+    for (int i = 1; i < Qatorlar->Length; i++) {
+      array<String^>^ Malumot = Qatorlar[i]->Split(',');
+      dataGridView1->Rows->Add(Malumot);
+    }
+    dataGridView1->Columns[2]->Width = 50;
+    dataGridView1->Columns[3]->Width = 50;
+    dataGridView1->Columns[4]->Width = 50;
+  
+}
+  private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
+    chart1->Visible = true;
+    chart1->Series["Series1"]->Points->Clear();
+    int N, M;
+    N = dataGridView1->Rows->Count;  //qatorlar soni
+    M = dataGridView1->Columns->Count;  //ustunlar soni
+    for (int i = 0; i < N - 1; i++)
+    {
+      String^ Tovarnomi = Convert::ToString(dataGridView1->Rows[i]->Cells[1]->Value);
+      int Sotilganmiqdori = Convert::ToInt32(dataGridView1->Rows[i]->Cells[2]->Value);
+      chart1->Series["Series1"]->Points->AddXY(Tovarnomi, Sotilganmiqdori);
+    }
+    chart1->ChartAreas[0]->AxisX->LabelStyle->Angle = -60;
+  }
+};
+}
